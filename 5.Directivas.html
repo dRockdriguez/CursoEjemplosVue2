@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+        integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+</head>
+
+<body>
+    <div id="main" class="container">
+        <div class="container">
+            <div class="col-md-12">
+                <h3>Suscríbete a nuestro boletín</h3>
+            </div>
+            <div class="col-md-5">
+                <input type="text" v-model="email" class="form-control">
+            </div>
+            <div class="col-md-1">
+                <input type="submit" class="btn btn-primary" v-show="email">
+            </div>
+        </div>
+    </div>
+
+    <!-- development version, includes helpful console warnings -->
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.18.0/axios.js"></script>
+    <script type="text/javascript">
+        var url = "https://randomuser.me/api/?results=10";
+        new Vue({
+            el: '#main',
+            data: {
+                email: ''
+            }
+        });
+    </script>
+</body>
+
+</html>
