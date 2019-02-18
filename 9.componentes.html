@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+        integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+</head>
+
+<body>
+    <div id="main" class="container">
+        <div class="row">
+            <div class="col-sm-4">
+                <h2>Album</h2>
+                <common-list v-bind:list="albums"></common-list>
+            </div>
+            <div class="col-sm-4">
+                <h2>Posts</h2>
+                <common-list v-bind:list="posts"></common-list>
+            </div>
+            <div class="col-sm-12">
+                <h3>JSON</h3>
+                <pre>
+                    {{ $data }}
+                </pre>
+            </div>
+        </div>
+    </div>
+
+    <!-- development version, includes helpful console warnings -->
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.18.0/axios.js"></script>
+    <script type="text/javascript">
+        Vue.component('common-list', {
+            props: ['list'],
+            template: `<ul class="list-group">
+                    <li class="list-group-item" v-for="item in list">
+                        {{ item.title}}
+                    </li>
+                </ul>`,
+        });
+
+        new Vue({
+            el: '#main',
+            created: function () {
+                this.getPosts();
+                this.getAlbums();
+            },
+            data: {
+                posts: [],
+                albums: []
+            },
+            methods: {
+                getPosts: function () {
+                    var url = 'https://jsonplaceholder.typicode.com/posts';
+                    axios.get(url).then(res => {
+                        this.posts = res.data;
+                    });
+                },
+                getAlbums: function () {
+                    var url = 'https://jsonplaceholder.typicode.com/albums';
+                    axios.get(url).then(res => {
+                        this.albums = res.data;
+                    });
+                }
+            },
+        });
+    </script>
+</body>
+
+</html>
