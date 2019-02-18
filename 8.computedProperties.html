@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+        integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+</head>
+
+<body>
+    <div id="main" class="container">
+        <div class="row">
+            <div class="col-sm-4">
+                <h2>VUE-Filtros</h2>
+                <button class="btn btn-primary" v-on:click="getUsers" v-if="!list.length">Listar</button>
+                <ul class="list-group" v-else>
+                    <li class="list-group-item">
+                        <input type="text" placeholder="Buscar" class="form-control" v-model="name">
+                    </li>
+                    <li class="list-group-item" v-for="item in searchUser">
+                        {{ item.name }}
+                    </li>
+                </ul>
+            </div>
+            <div class="col-sm-8">
+                <h1>JSON</h1>
+                <pre>
+                    {{ $data }}
+                </pre>
+            </div>
+        </div>
+    </div>
+
+    <!-- development version, includes helpful console warnings -->
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.18.0/axios.js"></script>
+    <script type="text/javascript">
+        new Vue({
+            el: '#main',
+            data: {
+                list: [],
+                name: ''
+            },
+            methods: {
+               getUsers: function() {
+                var url = 'https://jsonplaceholder.typicode.com/users';
+                axios.get(url).then( res => {
+                    this.list = res.data;
+                });
+               }
+            },
+            computed: {
+                searchUser: function(){
+                    return this.list.filter((el) => {
+                        return el.name.toLowerCase().includes(this.name.toLowerCase());
+                    });
+                }
+            }
+        });
+    </script>
+</body>
+
+</html>
